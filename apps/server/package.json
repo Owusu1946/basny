@@ -1,0 +1,34 @@
+{
+  "name": "server",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc -b ../../packages/api && tsdown",
+    "check-types": "tsc -b ../../packages/api && tsc --noEmit",
+    "compile": "bun build --compile --no-compile-autoload-dotenv --minify --sourcemap --bytecode ./src/index.ts --outfile server",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.mjs",
+    "env:generate": "varlock codegen",
+    "auth:generate": "varlock run -- pnpm dlx auth@latest generate --config src/services.ts --output ../../packages/db/src/schema/auth.ts --yes"
+  },
+  "dependencies": {
+    "@basny-web/api": "workspace:*",
+    "@basny-web/auth": "workspace:*",
+    "@basny-web/db": "workspace:*",
+    "@hono/node-server": "^2.1.1",
+    "@orpc/openapi": "catalog:",
+    "@orpc/server": "catalog:",
+    "@orpc/zod": "catalog:",
+    "better-auth": "catalog:",
+    "hono": "^4.13.7",
+    "varlock": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@basny-web/config": "workspace:*",
+    "@types/node": "catalog:",
+    "tsdown": "^0.23.0",
+    "tsx": "^4.23.13",
+    "typescript": "catalog:"
+  }
+}
