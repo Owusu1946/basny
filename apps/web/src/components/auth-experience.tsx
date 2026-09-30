@@ -6,9 +6,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { Route } from "next";
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 
 import { authClient } from "@/lib/auth-client";
+import { client } from "@/utils/orpc";
 
 type AuthMode = "sign-in" | "sign-up" | "forgot-password" | "reset-password" | "verify-email";
 
@@ -45,11 +46,28 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [routing, setRouting] = useState(false);
+  const navigating = useRef(false);
+
+  const openAccount = useCallback(async () => {
+    if (navigating.current) return;
+    navigating.current = true;
+    setRouting(true);
+    try {
+      const destination = returnTo === "/dashboard"
+        ? (await client.accountAccess()).isStaff ? "/admin" : "/dashboard"
+        : returnTo;
+      router.replace(destination as Route);
+    } catch (cause) {
+      navigating.current = false;
+      setRouting(false);
+      setError(cause instanceof Error ? cause.message : "We couldn’t open your account. Please try again.");
+    }
+  }, [returnTo, router]);
 
   useEffect(() => {
-    if (!sessionPending && session?.user?.emailVerified && (mode === "sign-in" || mode === "sign-up")) router.replace(returnTo as Route);
-    if (mode === "verify-email" && !sessionPending && session?.user?.emailVerified) router.replace(returnTo as Route);
-  }, [mode, router, returnTo, session, sessionPending]);
+    if (!busy && !sessionPending && session?.user?.emailVerified && ["sign-in", "sign-up", "verify-email"].includes(mode)) void openAccount();
+  }, [busy, mode, openAccount, session, sessionPending]);
 
   const content = copy[mode];
   const verificationCallback = typeof window === "undefined" ? "/verify-email" : `${window.location.origin}/verify-email`;
@@ -71,8 +89,7 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
       if (mode === "sign-in") {
         const result = await authClient.signIn.email({ email: email.trim(), password, callbackURL: `${window.location.origin}${returnTo}` });
         if (result.error) throw new Error(result.error.message || "Email or password is incorrect.");
-        router.replace(returnTo as Route);
-        router.refresh();
+        await openAccount();
         return;
       }
       if (mode === "forgot-password") {
@@ -128,9 +145,9 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
           {(mode === "sign-in" || mode === "sign-up" || mode === "reset-password") && <Field label={mode === "reset-password" ? "New password" : "Password"} name="password" type={showPassword ? "text" : "password"} value={password} onChange={setPassword} autoComplete={mode === "sign-in" ? "current-password" : "new-password"} hint={mode !== "sign-in" ? "At least 8 characters" : undefined} action={<button className="auth-show-password" type="button" onClick={() => setShowPassword((show) => !show)} aria-label={showPassword ? "Hide password" : "Show password"}>{showPassword ? "Hide" : "Show"}</button>} />}
           {mode === "reset-password" && <Field label="Confirm new password" name="confirmPassword" type={showPassword ? "text" : "password"} value={confirmPassword} onChange={setConfirmPassword} autoComplete="new-password" />}
           {mode === "sign-in" && <div className="auth-form__aside"><span>Secure sign-in</span><Link href="/forgot-password">Forgot password?</Link></div>}
-          <button className="auth-submit" type="submit" disabled={busy || (sessionPending && (mode === "sign-in" || mode === "sign-up"))}>
-            <span className={busy ? "auth-spinner" : "auth-submit__arrow"} aria-hidden="true">{busy ? "" : <HugeiconsIcon icon={ArrowRight01Icon} />}</span>
-            <span>{busy ? (mode === "sign-in" ? "Signing you in" : "One moment") : content.cta}</span>
+          <button className="auth-submit" type="submit" disabled={busy || routing || (sessionPending && (mode === "sign-in" || mode === "sign-up"))}>
+            <span className={busy || routing ? "auth-spinner" : "auth-submit__arrow"} aria-hidden="true">{busy || routing ? "" : <HugeiconsIcon icon={ArrowRight01Icon} />}</span>
+            <span>{routing ? "Opening your account" : busy ? (mode === "sign-in" ? "Signing you in" : "One moment") : content.cta}</span>
           </button>
         </form>
         {mode === "sign-in" && <p className="auth-switch">New to BASNY? <Link href="/register">Create an account</Link></p>}

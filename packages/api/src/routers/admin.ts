@@ -123,8 +123,8 @@ export const adminProcedures = {
   getPublicStoreNavigation: publicProcedure.handler(async ({ context }) => {
     const [row] = await context.db.select({ value: adminSetting.value }).from(adminSetting).where(eq(adminSetting.key, "store-navigation")).limit(1);
     const parsed = settingSchemas["store-navigation"].safeParse(row?.value);
-    const defaults = ["New arrivals", "Shoes", "Bags", "Accessories"].map((label, index) => ({ id: `NAV-${index + 1}`, label, href: ["/shop/new-arrivals", "/shop/shoes", "/shop/bags", "/shop/accessories"][index]!, active: true }));
-    return (parsed.success ? parsed.data : defaults).filter((link) => link.active).map(({ id, label, href }) => ({ id, label, href }));
+    const defaults = ["Shoes", "Bags", "Accessories"].map((label, index) => ({ id: `NAV-${index + 1}`, label, href: ["/shop/shoes", "/shop/bags", "/shop/accessories"][index]!, active: true }));
+    return (parsed.success ? parsed.data : defaults).filter((link) => link.active && link.href !== "/shop/new-arrivals" && link.label.trim().toLowerCase() !== "new arrivals").map(({ id, label, href }) => ({ id, label, href }));
   }),
   getPublishedStorePage: publicProcedure.input(z.object({ slug: z.string().regex(/^[a-z0-9-]{1,80}$/) })).handler(async ({ context, input }) => {
     const [row] = await context.db.select({ value: adminSetting.value }).from(adminSetting).where(eq(adminSetting.key, "store-pages")).limit(1);

@@ -9,10 +9,11 @@ const authPaths = ["/login", "/register", "/forgot-password", "/reset-password",
 export default function StorefrontChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAuthScreen = authPaths.some((path) => pathname === path || pathname.startsWith(`${path}/`));
+  const hideChrome = isAuthScreen || pathname === "/admin" || pathname.startsWith("/admin/");
   return <div className="min-h-screen">
-    {!isAuthScreen && <a className="skip-link" href="#main-content">Skip to content</a>}
-    {!isAuthScreen && <Header />}
+    {!hideChrome && <a className="skip-link" href="#main-content">Skip to content</a>}
+    {!hideChrome && <Header />}
     <div id="main-content" tabIndex={-1}>{children}</div>
-    {!isAuthScreen && <SiteFooter />}
+    {!hideChrome && <SiteFooter />}
   </div>;
 }

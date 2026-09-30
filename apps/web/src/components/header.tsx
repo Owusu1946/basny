@@ -27,7 +27,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { itemCount, hydrated } = useCart();
   const navigation = useQuery({ queryKey: ["public-store-navigation"], queryFn: () => client.getPublicStoreNavigation(), staleTime: 60_000, retry: 1 });
-  const navLinks = navigation.data?.length ? navigation.data : defaultNavLinks;
+  const navLinks = (navigation.data?.length ? navigation.data : defaultNavLinks).filter((link) => link.href !== "/shop/new-arrivals" && link.label.trim().toLowerCase() !== "new arrivals");
 
   return (
     <header className="site-header" id="top">

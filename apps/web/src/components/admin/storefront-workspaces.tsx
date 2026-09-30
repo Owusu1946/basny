@@ -27,7 +27,7 @@ const initialHero: HeroSlide[] = [
   { id: "HOME-02", eyebrow: "THE EVERYDAY EDIT", title: "Bags, flats, out the door.", description: "Easy pieces that fit into the way you already dress.", image: "/images/hero/flats-tote-clutch.png", imageAlt: "Everyday flats styled with a tote bag", primaryLabel: "Shop flats", primaryHref: "/shop/shoes", secondaryLabel: "Explore bags", secondaryHref: "/shop/bags", active: true },
   { id: "HOME-03", eyebrow: "MADE FOR THE MOMENT", title: "A little detail changes everything.", description: "Finishing touches for everyday plans and special ones.", image: "/images/hero/heels-getting-ready.png", imageAlt: "Shoes prepared for an evening out", primaryLabel: "Shop accessories", primaryHref: "/shop/accessories", secondaryLabel: "New arrivals", secondaryHref: "/shop/new-arrivals", active: false },
 ];
-const initialLinks = ["New arrivals", "Shoes", "Bags", "Accessories"].map((label, index) => ({ id: `NAV-${index + 1}`, label, href: ["/shop/new-arrivals", "/shop/shoes", "/shop/bags", "/shop/accessories"][index], active: true }));
+const initialLinks = ["Shoes", "Bags", "Accessories"].map((label, index) => ({ id: `NAV-${index + 1}`, label, href: ["/shop/shoes", "/shop/bags", "/shop/accessories"][index], active: true }));
 type NavLink = { id: string; label: string; href: string; active: boolean };
 type SeoRedirect = { id: string; from: string; to: string; active: boolean };
 const analyticsEventOptions = [

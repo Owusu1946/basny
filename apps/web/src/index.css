@@ -3213,6 +3213,9 @@ body:has(.admin-shell) #main-content {
 .product-detail__availability--sold-out { color: #9b4f42; font-weight: 600; }
 .product-card__badge--sold-out { background: #29231f; color: #fffefa; }
 .product-card__sold-out { display: block; padding: 9px 12px; color: #9b4f42; font-size: 12px; font-weight: 600; }
+.product-card__restock-link { grid-column: 1 / -1; display: inline-flex; min-width: 0; min-height: 44px; align-items: center; justify-content: center; gap: 8px; padding: 8px 10px; border: 1px solid #79563d; background: #fffdfa; color: #79563d; font-size: 11px; font-weight: 600; text-align: center; }
+.product-card__restock-link:hover { background: #f5ede4; }
+.product-card__restock-link:focus-visible { outline: 2px solid #79563d; outline-offset: 3px; }
 .product-card__action:disabled { cursor: not-allowed; opacity: .55; }
 .size-option--sold-out { color: #8a8178; border-style: dashed; }
 .size-option--sold-out small { display: block; font-size: 9px; line-height: 1.2; }

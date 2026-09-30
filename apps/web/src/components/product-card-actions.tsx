@@ -4,11 +4,13 @@ import { useState } from "react";
 import { WhatsappIcon, ShoppingBag01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { toast } from "sonner";
 
 import type { StoreProduct } from "@/lib/catalogue";
 import { useCart } from "@/lib/cart-context";
 import { buildWhatsAppPurchaseUrl } from "@/lib/whatsapp-purchase";
+import DirectionalIcon from "@/components/directional-icon";
 
 export default function ProductCardActions({ product }: { product: StoreProduct }) {
   const [intent, setIntent] = useState<"bag" | "whatsapp" | null>(null);
@@ -56,9 +58,12 @@ export default function ProductCardActions({ product }: { product: StoreProduct 
     setIntent(null);
   }
 
+  if (soldOut) {
+    return <div className="product-card__actions"><Link className="product-card__restock-link" href={`/products/${product.slug}`}>Get restock alert <DirectionalIcon direction="right" /></Link></div>;
+  }
+
   return (
     <div className="product-card__actions" aria-label={`Actions for ${product.name}`}>
-      {soldOut && <span className="product-card__sold-out" role="status">Out of stock</span>}
       <button type="button" className="product-card__action product-card__action--bag" onClick={addToBag} disabled={soldOut || Boolean(selectedVariant && selectedInBag >= selectedVariant.stock)}>
         <HugeiconsIcon icon={ShoppingBag01Icon} aria-hidden="true" />
         <span>Add to bag</span>
