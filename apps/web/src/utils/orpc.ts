@@ -1,3 +1,4 @@
+import { getApiBaseUrl } from "@/lib/api-url";
 import type { AppRouterClient } from "@basny-web/api/routers/index";
 import { createORPCClient } from "@orpc/client";
 import { RPCLink } from "@orpc/client/fetch";
@@ -25,7 +26,7 @@ export function createQueryClient() {
 export const queryClient = createQueryClient();
 
 export const link = new RPCLink({
-  url: `${process.env.NEXT_PUBLIC_SERVER_URL!.replace(/\/$/, "")}/rpc`,
+  url: `${getApiBaseUrl()}/rpc`,
   fetch(url, options) {
     return fetch(url, {
       ...options,

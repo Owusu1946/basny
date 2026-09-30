@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { getApiBaseUrl } from "@/lib/api-url";
 import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
@@ -236,7 +237,7 @@ async function uploadProductImage(file: File, onProgress: (progress: ProductImag
   const form = new FormData(); form.set("file", file);
   return new Promise<NonNullable<CatalogueProduct["imageMedia"]> & { url: string }>((resolve, reject) => {
     const request = new XMLHttpRequest();
-    request.open("POST", `${process.env.NEXT_PUBLIC_SERVER_URL!.replace(/\/$/, "")}/api/admin/catalogue/images`);
+    request.open("POST", `${getApiBaseUrl()}/api/admin/catalogue/images`);
     request.withCredentials = true;
     request.timeout = 120_000;
     request.addEventListener("load", () => {

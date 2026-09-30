@@ -1,5 +1,6 @@
 "use client";
 
+import { getApiBaseUrl } from "@/lib/api-url";
 import * as Ably from "ably";
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
@@ -25,7 +26,7 @@ export default function RealtimeProvider() {
     let disposed = false;
     realtime = new Ably.Realtime({
       authCallback: (_params, callback) => {
-        fetch(`${process.env.NEXT_PUBLIC_SERVER_URL!.replace(/\/$/, "")}/api/realtime/catalogue-token`, { cache: "no-store" })
+        fetch(`${getApiBaseUrl()}/api/realtime/catalogue-token`, { cache: "no-store" })
           .then(async (response) => {
             if (!response.ok) throw new Error("Catalogue live updates are not available.");
             callback(null, await response.json() as Ably.TokenRequest);
@@ -67,7 +68,7 @@ export default function RealtimeProvider() {
     if (reference && guestOrder?.trackingToken) {
       realtime = new Ably.Realtime({
         authCallback: (_params, callback) => {
-          fetch(`${process.env.NEXT_PUBLIC_SERVER_URL!.replace(/\/$/, "")}/api/realtime/order-token`, {
+          fetch(`${getApiBaseUrl()}/api/realtime/order-token`, {
             method: "POST", credentials: "include", headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ reference, trackingToken: guestOrder.trackingToken }),
           }).then(async (response) => {
@@ -93,7 +94,7 @@ export default function RealtimeProvider() {
       if (disposed) return;
       realtime = new Ably.Realtime({
         authCallback: (_params, callback) => {
-          fetch(`${process.env.NEXT_PUBLIC_SERVER_URL!.replace(/\/$/, "")}/api/realtime/token`, { credentials: "include" })
+          fetch(`${getApiBaseUrl()}/api/realtime/token`, { credentials: "include" })
             .then(async (response) => {
               if (!response.ok) throw new Error("Realtime authorization is not available.");
               callback(null, await response.json() as Ably.TokenRequest);
