@@ -18,6 +18,7 @@ export default function CheckoutReviewView() {
   const [coupon, setCoupon] = useState("");
   const [couponBusy, setCouponBusy] = useState(false);
   const [couponMessage, setCouponMessage] = useState("");
+  const [couponTone, setCouponTone] = useState<"success" | "error" | null>(null);
 
   useEffect(() => {
     setOrder(readCheckoutOrder());
@@ -43,9 +44,9 @@ export default function CheckoutReviewView() {
             const priced = await client.priceCheckout({ lines, identity: currentOrder.email });
             if (!active) return;
             const next: CheckoutOrder = { ...currentOrder, lines: priced.lines.map((line) => ({ productSlug: line.productSlug, name: line.name, image: line.image, size: line.size, colour: line.colour, quantity: line.quantity, unitPriceGhs: line.salePriceGhs })), subtotalGhs: priced.subtotalGhs, promotionDiscountGhs: priced.promotionDiscountGhs, discountGhs: 0, couponCode: undefined, totalGhs: priced.totalGhs + currentOrder.deliveryGhs };
-            setOrder(next); window.sessionStorage.setItem("basny-order-v1", JSON.stringify(next)); setCouponMessage(error instanceof Error ? error.message : "Your saved coupon is no longer available.");
-          } catch { setCouponMessage("We couldn’t refresh current prices. Please retry before placing your order."); }
-        } else setCouponMessage("We couldn’t refresh current prices. Please retry before placing your order.");
+            setOrder(next); window.sessionStorage.setItem("basny-order-v1", JSON.stringify(next)); setCouponTone("error"); setCouponMessage(error instanceof Error ? error.message : "Your saved coupon is no longer available.");
+          } catch { setCouponTone("error"); setCouponMessage("We couldn’t refresh current prices. Please retry before placing your order."); }
+        } else { setCouponTone("error"); setCouponMessage("We couldn’t refresh current prices. Please retry before placing your order."); }
       }
     }
     void refreshPricing();
@@ -60,18 +61,18 @@ export default function CheckoutReviewView() {
 
   async function applyCoupon() {
     if (!order || !coupon.trim() || couponBusy) return;
-    setCouponBusy(true); setCouponMessage("");
+    setCouponBusy(true); setCouponMessage(""); setCouponTone(null);
     try {
       const result = await client.priceCheckout({ couponCode: coupon, identity: order.email, lines: order.lines.map(({ productSlug, size, colour, quantity }) => ({ productSlug, size, colour, quantity })) });
       const next: CheckoutOrder = { ...order, lines: result.lines.map((line) => ({ productSlug: line.productSlug, name: line.name, image: line.image, size: line.size, colour: line.colour, quantity: line.quantity, unitPriceGhs: line.salePriceGhs })), couponCode: result.discountCode ?? undefined, discountGhs: result.discountGhs, promotionDiscountGhs: result.promotionDiscountGhs, subtotalGhs: result.subtotalGhs, totalGhs: Math.max(0, result.totalGhs + order.deliveryGhs) };
-      setOrder(next); window.sessionStorage.setItem("basny-order-v1", JSON.stringify(next)); setCouponMessage(`Coupon applied · ${formatGhs(result.discountGhs)} off`);
-    } catch (error) { setCouponMessage(error instanceof Error ? error.message : "This coupon could not be applied."); }
+      setOrder(next); window.sessionStorage.setItem("basny-order-v1", JSON.stringify(next)); setCouponTone("success"); setCouponMessage(`Coupon applied · ${formatGhs(result.discountGhs)} off`);
+    } catch (error) { setCouponTone("error"); setCouponMessage(error instanceof Error ? error.message : "This coupon could not be applied."); }
     finally { setCouponBusy(false); }
   }
   function removeCoupon() {
     if (!order) return;
     const next = { ...order, couponCode: undefined, discountGhs: 0, totalGhs: order.subtotalGhs - (order.promotionDiscountGhs ?? 0) + order.deliveryGhs };
-    setOrder(next); window.sessionStorage.setItem("basny-order-v1", JSON.stringify(next)); setCoupon(""); setCouponMessage("Coupon removed.");
+    setOrder(next); window.sessionStorage.setItem("basny-order-v1", JSON.stringify(next)); setCoupon(""); setCouponTone("success"); setCouponMessage("Coupon removed.");
   }
 
   return <main className="checkout-page page-shell">
@@ -100,7 +101,15 @@ export default function CheckoutReviewView() {
         <p className="eyebrow">Order total</p><h2 id="review-summary-title">Summary</h2>
         <div className="checkout-summary__row"><span>Items ({itemCount})</span><span>{formatGhs(order.subtotalGhs)}</span></div>
         {(order.promotionDiscountGhs ?? 0) > 0 && <div className="checkout-summary__row"><span>Sale savings</span><span>−{formatGhs(order.promotionDiscountGhs ?? 0)}</span></div>}
-        <section className="checkout-coupon" aria-label="Discount code"><label htmlFor="checkout-coupon-code">Discount code</label><div><input id="checkout-coupon-code" value={coupon} onChange={(event) => setCoupon(event.target.value.toUpperCase())} placeholder="Enter code" autoComplete="off" /><button type="button" disabled={couponBusy || !coupon.trim()} onClick={() => void applyCoupon()}>{couponBusy ? "Checking…" : order.couponCode ? "Update" : "Apply"}</button></div>{order.couponCode && <button className="checkout-coupon__remove" type="button" onClick={removeCoupon}>Remove {order.couponCode}</button>}{couponMessage && <p role="status">{couponMessage}</p>}</section>
+        <section className="checkout-coupon" aria-label="Discount code">
+          <label htmlFor="checkout-coupon-code">Have a discount code?</label>
+          <div className="checkout-coupon__entry">
+            <input id="checkout-coupon-code" value={coupon} onChange={(event) => { setCoupon(event.target.value.toUpperCase()); setCouponMessage(""); setCouponTone(null); }} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); void applyCoupon(); } }} placeholder="Enter your code" autoComplete="off" aria-invalid={couponTone === "error"} />
+            <button type="button" disabled={couponBusy || !coupon.trim()} onClick={() => void applyCoupon()}>{couponBusy ? "Checking…" : order.couponCode ? "Update" : "Apply"}</button>
+          </div>
+          {order.couponCode && <div className="checkout-coupon__applied"><span>Applied: <strong>{order.couponCode}</strong></span><button className="checkout-coupon__remove" type="button" disabled={couponBusy} onClick={removeCoupon}>Remove</button></div>}
+          {couponMessage && <p className={`checkout-coupon__feedback checkout-coupon__feedback--${couponTone ?? "success"}`} role={couponTone === "error" ? "alert" : "status"}>{couponMessage}</p>}
+        </section>
         {(order.discountGhs ?? 0) > 0 && <div className="checkout-summary__row"><span>Discount{order.couponCode ? ` · ${order.couponCode}` : ""}</span><span>−{formatGhs(order.discountGhs ?? 0)}</span></div>}
         <div className="checkout-summary__row"><span>Delivery</span><span>{formatGhs(order.deliveryGhs)}</span></div>
         <div className="checkout-summary__total"><span>Total</span><strong>{formatGhs(order.totalGhs)}</strong></div>

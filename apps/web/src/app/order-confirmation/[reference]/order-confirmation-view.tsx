@@ -5,7 +5,8 @@ import { CheckmarkCircle02Icon, Location01Icon } from "@hugeicons/core-free-icon
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 import { formatGhs } from "@/lib/sample-catalog";
 import { readCheckoutOrder, type CheckoutOrder } from "@/lib/checkout-order";
@@ -26,7 +27,34 @@ export default function OrderConfirmationView({ reference }: { reference: string
   const [loaded, setLoaded] = useState(false);
   const [retrying, setRetrying] = useState(false);
   const [retryError, setRetryError] = useState("");
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending: sessionPending } = authClient.useSession();
+  const addressPromptStarted = useRef(false);
+
+  useEffect(() => {
+    if (sessionPending || !session?.user.emailVerified || !order || order.paymentStatus !== "paid" || addressPromptStarted.current) return;
+    if (session.user.email.toLowerCase() !== order.email.toLowerCase()) return;
+    const promptKey = `basny:save-checkout-address:${session.user.id}:${reference}`;
+    if (window.sessionStorage.getItem(promptKey)) return;
+    addressPromptStarted.current = true;
+    let active = true;
+    void client.listAccountAddresses().then((addresses) => {
+      if (!active || addresses.length > 0) return;
+      window.sessionStorage.setItem(promptKey, "shown");
+      toast("Save your delivery details for next time?", {
+        description: "Keep this address and phone number in your BASNY account for faster checkout.",
+        duration: 12000,
+        action: { label: "Save details", onClick: () => {
+          const saving = async () => {
+            const profile = await client.accountProfile();
+            if (profile.phone !== order.phone) await client.updateAccountProfile({ name: profile.name, phone: order.phone });
+            await client.saveAccountAddress({ label: "Home", fullName: order.name, phone: order.phone, region: order.region, town: order.town, neighbourhood: order.town, streetAddress: order.address, deliveryNote: order.note, isDefault: true });
+          };
+          void toast.promise(saving(), { loading: "Saving your delivery details…", success: "Address and phone saved to your account.", error: "Couldn’t save your details. You can add them from your account." });
+        } },
+      });
+    }).catch(() => { addressPromptStarted.current = false; });
+    return () => { active = false; };
+  }, [order, reference, session?.user.email, session?.user.emailVerified, session?.user.id, sessionPending]);
 
   async function retryPayment() {
     const local = readCheckoutOrder(reference);

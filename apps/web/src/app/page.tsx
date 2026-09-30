@@ -33,6 +33,12 @@ const categories = [
   },
 ] as const;
 
+const categoryVisuals: Record<string, string> = {
+  shoes: "/images/categories/shoes.webp",
+  bags: "/images/categories/bags.webp",
+  accessories: "/images/categories/accessories.webp",
+};
+
 export default async function Home() {
   let content = defaultHomeContent;
   let catalogue = { products: [] as Awaited<ReturnType<typeof getPublicCatalogue>>["products"], categories: [] as Awaited<ReturnType<typeof getPublicCatalogue>>["categories"] };
@@ -63,6 +69,7 @@ export default async function Home() {
               key={category.title}
             >
               <span className="category-number">{category.number}</span>
+              {categoryVisuals[category.href.split("/").pop() ?? ""] && <Image className="category-card__visual" src={categoryVisuals[category.href.split("/").pop() ?? ""]} alt="" width={240} height={240} sizes="(max-width: 760px) 112px, 162px" />}
               <span className="category-card__bottom">
                 <span>
                   <span className="category-card__title">{category.title}</span>
