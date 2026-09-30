@@ -704,7 +704,7 @@ input:focus-visible {
     gap: 24px;
   }
 
-  .header-action span:not(.cart-icon-wrap, .cart-count) {
+  .header-action > span:not(.cart-icon-wrap, .user-menu__avatar) {
     display: none;
   }
 
@@ -786,7 +786,7 @@ input:focus-visible {
     width: 21px;
   }
 
-  .header-action span:not(.cart-icon-wrap, .cart-count) {
+  .header-action > span:not(.cart-icon-wrap, .user-menu__avatar) {
     display: none;
   }
 

@@ -17,6 +17,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { adminNavigation, getAdminDestination } from "@/lib/admin-navigation";
+import DirectionalIcon from "@/components/directional-icon";
 import type { IconSvgElement } from "@hugeicons/react";
 
 type AdminShellProps = { children: React.ReactNode };
@@ -229,7 +230,7 @@ export default function AdminShell({ children }: AdminShellProps) {
           <Link className="admin-store-link" href={"/" as Route} title="View storefront">
             <span className="admin-store-link__icon"><Icon icon={Store01Icon} /></span>
             <span className="admin-store-link__copy"><strong>View storefront</strong><small>BASNY online store</small></span>
-            <span className="admin-store-link__arrow" aria-hidden="true">↗</span>
+            <span className="admin-store-link__arrow"><DirectionalIcon /></span>
           </Link>
           <div className="admin-profile">
             <span className="admin-profile__avatar" aria-hidden="true">B</span>
