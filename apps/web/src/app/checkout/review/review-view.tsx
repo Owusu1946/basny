@@ -1,5 +1,6 @@
 "use client";
 
+import DirectionalIcon from "@/components/directional-icon";
 import { ArrowLeft01Icon, CheckmarkCircle02Icon, Location01Icon, PencilEdit01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
@@ -52,7 +53,7 @@ export default function CheckoutReviewView() {
   }, [order?.reference]);
 
   if (!loaded) return <CheckoutLoadingState variant="review" />;
-  if (!order) return <main className="checkout-page page-shell"><div className="checkout-empty"><p className="eyebrow">Checkout</p><h1>Let’s start with delivery.</h1><p>Add your delivery details before reviewing your order.</p><Link className="button-primary" href="/checkout">Enter delivery details <span aria-hidden="true">→</span></Link></div></main>;
+  if (!order) return <main className="checkout-page page-shell"><div className="checkout-empty"><p className="eyebrow">Checkout</p><h1>Let’s start with delivery.</h1><p>Add your delivery details before reviewing your order.</p><Link className="button-primary" href="/checkout">Enter delivery details <DirectionalIcon direction="right" /></Link></div></main>;
 
   const address = [order.address, order.town, order.region].filter(Boolean).join(", ");
   const itemCount = order.lines.reduce((total, line) => total + line.quantity, 0);
@@ -103,7 +104,7 @@ export default function CheckoutReviewView() {
         {(order.discountGhs ?? 0) > 0 && <div className="checkout-summary__row"><span>Discount{order.couponCode ? ` · ${order.couponCode}` : ""}</span><span>−{formatGhs(order.discountGhs ?? 0)}</span></div>}
         <div className="checkout-summary__row"><span>Delivery</span><span>{formatGhs(order.deliveryGhs)}</span></div>
         <div className="checkout-summary__total"><span>Total</span><strong>{formatGhs(order.totalGhs)}</strong></div>
-        <Link className="checkout-place-order" href="/checkout/payment">Continue to place order <span aria-hidden="true">→</span></Link>
+        <Link className="checkout-place-order" href="/checkout/payment">Continue to place order <DirectionalIcon direction="right" /></Link>
         <Link className="checkout-back" href="/checkout"><HugeiconsIcon icon={ArrowLeft01Icon} aria-hidden="true" /> Back to delivery details</Link>
       </aside>
     </div>

@@ -1,3 +1,4 @@
+import DirectionalIcon from "@/components/directional-icon";
 import type { Metadata } from "next";
 import type { Route } from "next";
 import Link from "next/link";
@@ -75,7 +76,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       {structuredProductJson && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredProductJson }} />}
       <nav className="breadcrumb" aria-label="Breadcrumb"><Link href="/">Home</Link><span aria-hidden="true">/</span>{category && <><Link href={`/shop/${category.slug}`}>{category.name}</Link><span aria-hidden="true">/</span></>}<span>{product.name}</span></nav>
       <ProductDetail product={product} />
-      {related.length > 0 && <section className="related-products" aria-labelledby="related-title"><div className="related-products__heading"><div><p className="eyebrow">More to see</p><h2 id="related-title">You may also like</h2></div>{category && <Link href={`/shop/${category.slug}`}>Browse {category.name.toLowerCase()} <span aria-hidden="true">↗</span></Link>}</div><ProductGrid products={related} /></section>}
+      {related.length > 0 && <section className="related-products" aria-labelledby="related-title"><div className="related-products__heading"><div><p className="eyebrow">More to see</p><h2 id="related-title">You may also like</h2></div>{category && <Link href={`/shop/${category.slug}`}>Browse {category.name.toLowerCase()} <DirectionalIcon /></Link>}</div><ProductGrid products={related} /></section>}
     </main>
   );
 }

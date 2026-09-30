@@ -1,5 +1,6 @@
 "use client";
 
+import DirectionalIcon from "@/components/directional-icon";
 import { CheckmarkCircle02Icon, InformationCircleIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
@@ -59,7 +60,7 @@ export default function CheckoutPaymentView() {
   }
 
   if (!loaded) return <CheckoutLoadingState variant="payment" />;
-  if (!order) return <main className="checkout-page page-shell"><div className="checkout-empty"><p className="eyebrow">Place order</p><h1>Your order is waiting.</h1><p>Review your delivery details and items before placing your order.</p><Link className="button-primary" href="/checkout/review">Review your order <span aria-hidden="true">→</span></Link></div></main>;
+  if (!order) return <main className="checkout-page page-shell"><div className="checkout-empty"><p className="eyebrow">Place order</p><h1>Your order is waiting.</h1><p>Review your delivery details and items before placing your order.</p><Link className="button-primary" href="/checkout/review">Review your order <DirectionalIcon direction="right" /></Link></div></main>;
 
   const itemCount = order.lines.reduce((total, line) => total + line.quantity, 0);
 
@@ -90,7 +91,7 @@ export default function CheckoutPaymentView() {
           <div className="checkout-summary__row"><span>Delivery</span><span>{formatGhs(order.deliveryGhs)}</span></div>
           <div className="checkout-summary__total"><span>Total</span><strong>{formatGhs(order.totalGhs)}</strong></div>
           {error && <p className="checkout-error" role="alert">{error}</p>}
-          <button className="checkout-place-order" type="button" onClick={() => void placeOrder()} disabled={placing}>{placing ? <><i className="checkout-progress-spinner" aria-hidden="true" /> Preparing secure payment</> : <>Pay {formatGhs(order.totalGhs)} <span aria-hidden="true">→</span></>}</button>
+          <button className="checkout-place-order" type="button" onClick={() => void placeOrder()} disabled={placing}>{placing ? <><i className="checkout-progress-spinner" aria-hidden="true" /> Preparing secure payment</> : <>Pay {formatGhs(order.totalGhs)} <DirectionalIcon direction="right" /></>}</button>
           <Link className="checkout-back" href="/checkout/review">Back to order review</Link>
         </aside>
       </div>

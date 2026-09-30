@@ -1,3 +1,4 @@
+import DirectionalIcon from "@/components/directional-icon";
 import type { IconSvgElement } from "@hugeicons/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
@@ -24,7 +25,7 @@ export default function EmptyCommerceState({
       <h1>{title}</h1>
       <p className="empty-state__description">{description}</p>
       {query ? <p className="empty-state__query">Your search: “{query}”</p> : null}
-      <Link className="button-primary" href="/#shoes">{actionLabel}<span aria-hidden="true">↗</span></Link>
+      <Link className="button-primary" href="/#shoes">{actionLabel}<DirectionalIcon /></Link>
     </main>
   );
 }

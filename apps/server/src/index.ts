@@ -236,5 +236,31 @@ serve(
   },
   (info) => {
     console.log(`Server is running on http://localhost:${info.port}`);
+
+    // Render's free Web Services spin down after 15 minutes without inbound traffic.
+    // A request through the public service URL keeps an already-running instance active.
+    // It cannot wake an instance after Render has stopped this process.
+    if (ENV.RENDER_EXTERNAL_URL) {
+      const healthUrl = new URL("/health", ENV.RENDER_EXTERNAL_URL);
+      let pingInFlight = false;
+      const keepAlive = setInterval(async () => {
+        if (pingInFlight) return;
+        pingInFlight = true;
+        try {
+          const response = await fetch(healthUrl, { signal: AbortSignal.timeout(10_000) });
+          if (!response.ok) {
+            console.warn(`Render keep-alive health ping returned ${response.status}`);
+          } else {
+            console.info("Render keep-alive health ping succeeded");
+          }
+        } catch (error) {
+          console.warn("Render keep-alive health ping failed", error);
+        } finally {
+          pingInFlight = false;
+        }
+      }, 10 * 60 * 1000);
+      keepAlive.unref();
+      console.log("Render keep-alive enabled; health endpoint will be pinged every 10 minutes.");
+    }
   },
 );

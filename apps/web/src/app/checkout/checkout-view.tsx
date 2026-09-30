@@ -1,5 +1,6 @@
 "use client";
 
+import DirectionalIcon from "@/components/directional-icon";
 import { ArrowLeft01Icon, CheckmarkCircle02Icon, Location01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
@@ -151,7 +152,7 @@ export default function CheckoutView() {
   if (!hydrated || existingOrder === undefined || deliverySettings.isPending) return <CheckoutLoadingState variant="delivery" />;
   if (deliverySettings.isError) return <main className="checkout-page page-shell"><section className="checkout-panel" role="alert"><h1>Delivery options couldn’t load</h1><p>Your order details are safe. Refresh the delivery options to continue.</p><button className="admin-secondary-button" type="button" onClick={() => void deliverySettings.refetch()}>Try again</button></section></main>;
   if (lines.length === 0) return <main className="checkout-page page-shell">
-    <div className="checkout-empty"><p className="eyebrow">Checkout</p><h1>Your bag is empty.</h1><p>Find something you love and it will be waiting here.</p><Link className="button-primary" href="/shop">Explore the collection <span aria-hidden="true">↗</span></Link></div>
+    <div className="checkout-empty"><p className="eyebrow">Checkout</p><h1>Your bag is empty.</h1><p>Find something you love and it will be waiting here.</p><Link className="button-primary" href="/shop">Explore the collection <DirectionalIcon /></Link></div>
   </main>;
 
   return <main className="checkout-page page-shell">
@@ -217,7 +218,7 @@ export default function CheckoutView() {
         <div className="checkout-summary__row"><span>Items ({itemCount})</span><span>{formatGhs(subtotalGhs)}</span></div>
         <div className="checkout-summary__row"><span>Delivery</span><span>{formatGhs(deliveryGhs)}</span></div>
         <div className="checkout-summary__total"><span>Total</span><strong>{formatGhs(totalGhs)}</strong></div>
-        <button className="checkout-place-order" type="submit" disabled={placing}>{placing ? <><i className="checkout-progress-spinner" aria-hidden="true" /> Saving your delivery details</> : <>Review order <span aria-hidden="true">→</span></>}</button>
+        <button className="checkout-place-order" type="submit" disabled={placing}>{placing ? <><i className="checkout-progress-spinner" aria-hidden="true" /> Saving your delivery details</> : <>Review order <DirectionalIcon direction="right" /></>}</button>
         <Link className="checkout-back" href="/cart"><HugeiconsIcon icon={ArrowLeft01Icon} aria-hidden="true" /> Back to your bag</Link>
       </aside>
     </form>

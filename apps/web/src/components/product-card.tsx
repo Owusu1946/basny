@@ -16,13 +16,13 @@ export default function ProductCard({ product }: { product: StoreProduct }) {
           {product.stock <= 0 ? <span className="product-card__badge product-card__badge--sold-out">Out of stock</span> : product.badge && <span className="product-card__badge">{product.badge}</span>}
         </Link>
         <WishlistButton slug={product.slug} name={product.name} />
-        <ProductCardActions product={product} />
       </div>
       <div className="product-card__details">
         <p className="product-card__type">{product.type}</p>
         <h3><Link href={`/products/${product.slug}`}>{product.name}</Link></h3>
         <div className="product-card__price-row"><p className="product-card__price">{formatGhs(product.priceGhs)}{product.regularPriceGhs && product.regularPriceGhs > product.priceGhs ? <del>{formatGhs(product.regularPriceGhs)}</del> : null}</p><ProductCardStock product={product} /></div>
       </div>
+      <ProductCardActions product={product} />
     </article>
   );
 }

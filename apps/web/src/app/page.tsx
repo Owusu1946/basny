@@ -1,3 +1,4 @@
+import DirectionalIcon from "@/components/directional-icon";
 import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
@@ -67,7 +68,7 @@ export default async function Home() {
                   <span className="category-card__title">{category.title}</span>
                   <span className="category-card__description">{category.description}</span>
                 </span>
-                <span className="category-card__arrow" aria-hidden="true">↗</span>
+                <span className="category-card__arrow"><DirectionalIcon /></span>
               </span>
             </Link>
           ))}
@@ -77,7 +78,7 @@ export default async function Home() {
       {featuredProducts.length > 0 && <section className="home-products page-shell" aria-labelledby="home-products-title">
         <div className="home-products__heading">
           <div><p className="eyebrow">A first look</p><h2 id="home-products-title">Pieces to know</h2></div>
-          <Link href="/shop">Shop all <span aria-hidden="true">↗</span></Link>
+          <Link href="/shop">Shop all <DirectionalIcon /></Link>
         </div>
         <ProductGrid products={featuredProducts} />
       </section>}
@@ -104,7 +105,7 @@ export default async function Home() {
           <p className="eyebrow">{content.editorial.eyebrow}</p>
           <h2 id="editorial-title">{content.editorial.title}</h2>
           <p>{content.editorial.description}</p>
-          <Link className="text-link" href={content.editorial.linkHref as Route}>{content.editorial.linkLabel} <span aria-hidden="true">↗</span></Link>
+          <Link className="text-link" href={content.editorial.linkHref as Route}>{content.editorial.linkLabel} <DirectionalIcon /></Link>
         </div>
       </section>
 

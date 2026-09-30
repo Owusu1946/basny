@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Message01Icon, ShoppingBag01Icon } from "@hugeicons/core-free-icons";
+import { WhatsappIcon, ShoppingBag01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -63,8 +63,8 @@ export default function ProductCardActions({ product }: { product: StoreProduct 
         <HugeiconsIcon icon={ShoppingBag01Icon} aria-hidden="true" />
         <span>Add to bag</span>
       </button>
-      <button type="button" className="product-card__action product-card__action--whatsapp" onClick={purchaseOnWhatsApp} disabled={soldOut}>
-        <HugeiconsIcon icon={Message01Icon} aria-hidden="true" />
+      <button type="button" className="product-card__action product-card__action--whatsapp" aria-label={`Buy ${product.name} via WhatsApp`} title="Buy via WhatsApp" onClick={purchaseOnWhatsApp} disabled={soldOut}>
+        <HugeiconsIcon icon={WhatsappIcon} aria-hidden="true" />
         <span>Buy via WhatsApp</span>
       </button>
       {intent && needsSize && (

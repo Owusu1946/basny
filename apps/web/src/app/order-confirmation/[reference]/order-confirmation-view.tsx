@@ -1,5 +1,6 @@
 "use client";
 
+import DirectionalIcon from "@/components/directional-icon";
 import { CheckmarkCircle02Icon, Location01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
@@ -110,7 +111,7 @@ export default function OrderConfirmationView({ reference }: { reference: string
       <p className="eyebrow">Order details</p>
       <h1>We couldn’t find this order.</h1>
       <p className="confirmation-intro">Check the link you opened, or return to the collection to place an order.</p>
-      <Link className="button-primary" href="/shop">Continue shopping <span aria-hidden="true">↗</span></Link>
+      <Link className="button-primary" href="/shop">Continue shopping <DirectionalIcon /></Link>
     </div>
   </main>;
 
@@ -154,7 +155,7 @@ export default function OrderConfirmationView({ reference }: { reference: string
         </section>
       </div>}
       {retryError && <p className="checkout-error" role="alert">{retryError}</p>}
-      <div className="confirmation-actions">{order.paymentStatus !== "paid" && order.status !== "cancelled" && <button className="button-primary" type="button" disabled={retrying} onClick={() => void retryPayment()}>{retrying ? <><i className="checkout-progress-spinner" aria-hidden="true" /> Connecting securely</> : <>Continue to payment <span aria-hidden="true">→</span></>}</button>}<Link className="button-primary" href="/shop">Continue browsing <span aria-hidden="true">↗</span></Link>{session?.user?.emailVerified && <Link className="text-link" href="/account/orders">View all orders</Link>}<Link className="text-link" href="/">Back to BASNY home</Link></div>
+      <div className="confirmation-actions">{order.paymentStatus !== "paid" && order.status !== "cancelled" && <button className="button-primary" type="button" disabled={retrying} onClick={() => void retryPayment()}>{retrying ? <><i className="checkout-progress-spinner" aria-hidden="true" /> Connecting securely</> : <>Continue to payment <DirectionalIcon direction="right" /></>}</button>}<Link className="button-primary" href="/shop">Continue browsing <DirectionalIcon /></Link>{session?.user?.emailVerified && <Link className="text-link" href="/account/orders">View all orders</Link>}<Link className="text-link" href="/">Back to BASNY home</Link></div>
     </div>
   </main>;
 }

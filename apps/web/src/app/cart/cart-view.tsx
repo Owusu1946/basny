@@ -1,5 +1,6 @@
 "use client";
 
+import DirectionalIcon from "@/components/directional-icon";
 import { ArrowLeft01Icon, Delete02Icon, MinusSignIcon, PlusSignIcon, ShoppingBag01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
@@ -20,7 +21,7 @@ export default function CartView() {
       <p className="eyebrow">Your BASNY bag</p>
       <h1>Your bag is waiting.</h1>
       <p>Take a look through shoes, bags and accessories chosen for everyday life.</p>
-      <Link className="button-primary" href="/shop">Explore the collection <span aria-hidden="true">↗</span></Link>
+      <Link className="button-primary" href="/shop">Explore the collection <DirectionalIcon /></Link>
     </div>
   </main>;
 
@@ -58,7 +59,7 @@ export default function CartView() {
         <div className="cart-summary__row"><span>Delivery</span><span>Calculated at checkout</span></div>
         <p className="cart-summary__hint">GHS 60 in Accra · GHS 100 elsewhere in Ghana</p>
         <div className="cart-summary__total"><span>Estimated total</span><strong>{formatGhs(subtotalGhs)}<small> + delivery</small></strong></div>
-        <Link className="button-primary cart-summary__button" href="/checkout">Continue to delivery <span aria-hidden="true">→</span></Link>
+        <Link className="button-primary cart-summary__button" href="/checkout">Continue to delivery <DirectionalIcon direction="right" /></Link>
       </aside>
     </div>
   </main>;

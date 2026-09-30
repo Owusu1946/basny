@@ -1,5 +1,6 @@
 "use client";
 
+import DirectionalIcon from "@/components/directional-icon";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import Image from "next/image";
@@ -42,7 +43,7 @@ export default function HeroSlider({ slides }: { slides: HomeContent["slides"] }
           <div className="hero-links">
             <Link className="button-primary" href={activeSlide.primaryHref as Route}>
               {activeSlide.primaryLabel}
-              <span aria-hidden="true">↗</span>
+              <DirectionalIcon />
             </Link>
             <Link className="button-secondary" href={activeSlide.secondaryHref as Route}>
               {activeSlide.secondaryLabel}
