@@ -3666,3 +3666,41 @@ body:has(.admin-shell) #main-content {
   .home-products h2 { font-size: clamp(27px, 7.2vw, 34px); line-height: 1.1; }
   .home-products__heading > a { display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; font-size: 11px; }
 }
+/* Keep authentication forms comfortable on phones and narrow tablets. */
+@media (max-width: 900px) {
+  .auth-page, .auth-page--loading { display: flex; flex-direction: column; min-height: 100svh; }
+  .auth-visual, .auth-loading-visual { display: none; }
+  .auth-panel { min-width: 0; min-height: 100svh; padding: max(20px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left)); }
+  .auth-panel__top { gap: 16px; flex-wrap: wrap; }
+  .auth-panel__top > .auth-brand { display: inline-flex; }
+  .auth-panel__top > .auth-brand > span { font-size: 26px; }
+  .auth-panel__top > .auth-brand > small { font-size: 7px; }
+  .auth-panel__top > a:last-child { min-height: 44px; font-size: 12px; }
+  .auth-card { width: min(100%, 430px); padding-block: 36px; }
+  .auth-card h1 { font-size: clamp(32px, 8vw, 44px); line-height: 1.08; text-wrap: balance; }
+  .auth-card__intro { margin-bottom: 24px; font-size: 14px; }
+  .auth-form { gap: 18px; }
+  .auth-field__control { min-width: 0; min-height: 52px; }
+  .auth-field__control input { min-height: 50px; font-size: 16px; }
+  .auth-field__label { font-size: 13px; }
+  .auth-field__hint { font-size: 12px; line-height: 1.5; }
+  .auth-show-password { min-width: 44px; min-height: 44px; margin-right: 4px; font-size: 12px; }
+  .auth-form__aside { align-items: center; flex-wrap: wrap; font-size: 12px; }
+  .auth-form__aside a { display: inline-flex; align-items: center; min-height: 44px; }
+  .auth-submit { min-height: 52px; font-size: 14px; }
+  .auth-switch { font-size: 13px; line-height: 1.6; }
+  .auth-switch a { min-height: 44px; }
+  .auth-feedback, .auth-verify-note { min-width: 0; font-size: 13px; overflow-wrap: anywhere; }
+  .auth-panel__foot { flex-wrap: wrap; font-size: 9px; line-height: 1.5; }
+  .auth-loading-panel { width: min(100%, 478px); min-height: 100svh; align-self: center; padding: 24px; }
+  .auth-loading-brand { margin-bottom: 28px; }
+}
+@media (max-width: 360px) {
+  .auth-panel { padding-inline: 18px; }
+  .auth-panel__top { gap: 10px; }
+  .auth-panel__top > a:last-child { font-size: 11px; }
+  .auth-card { padding-block: 28px; }
+}
+@media (max-width: 900px) and (max-height: 600px) {
+  .auth-card { margin-block: 0; padding-block: 24px; }
+}
