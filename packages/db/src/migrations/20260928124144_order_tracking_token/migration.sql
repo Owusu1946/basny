@@ -1,0 +1,1 @@
+ALTER TABLE "customer_order" ADD COLUMN "tracking_token_hash" text;

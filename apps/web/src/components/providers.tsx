@@ -7,12 +7,15 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { queryClient } from "@/utils/orpc";
 
 import { ThemeProvider } from "./theme-provider";
+import { CartProvider } from "@/lib/cart-context";
+import RealtimeProvider from "./realtime-provider";
+import { WishlistProvider } from "@/lib/wishlist-context";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       <QueryClientProvider client={queryClient}>
-        {children}
+        <CartProvider><WishlistProvider>{children}</WishlistProvider><RealtimeProvider /></CartProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>
       <Toaster richColors />

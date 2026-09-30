@@ -1,0 +1,3 @@
+ALTER TABLE "inventory_reservation" ADD CONSTRAINT "inventory_reservation_quantity_check" CHECK ("quantity" > 0);--> statement-breakpoint
+ALTER TABLE "restock_subscription" ADD CONSTRAINT "restock_subscription_attempts_check" CHECK ("attempts" >= 0);--> statement-breakpoint
+ALTER TABLE "catalogue_product_variant" ADD CONSTRAINT "catalogue_variant_stock_reservation_check" CHECK ("stock" >= "reserved_stock" AND "reserved_stock" >= 0);

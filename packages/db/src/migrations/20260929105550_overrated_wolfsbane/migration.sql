@@ -1,0 +1,2 @@
+CREATE INDEX "user_email_normalized_idx" ON "user" (lower(trim("email")));--> statement-breakpoint
+CREATE INDEX "customer_order_email_normalized_idx" ON "customer_order" (lower(trim("customer_email")));

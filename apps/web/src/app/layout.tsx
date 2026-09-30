@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "../index.css";
-import Header from "@/components/header";
 import Providers from "@/components/providers";
 import PwaRegistration from "@/components/pwa-registration";
+import StorefrontChrome from "@/components/storefront-chrome";
+import { getPublicStoreSeoSettings } from "@/lib/public-catalogue.server";
+import { getPublicSiteOrigin } from "@/lib/public-site.server";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,10 +18,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "basny-web",
-  description: "basny-web",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPublicStoreSeoSettings();
+  const origin = getPublicSiteOrigin(seo);
+  return {
+    metadataBase: origin,
+    title: { default: seo.siteTitle, template: "%s | BASNY Enterprise" },
+    description: seo.siteDescription,
+    robots: { index: seo.indexingEnabled, follow: seo.indexingEnabled },
+    openGraph: { type: "website", siteName: seo.siteTitle, description: seo.siteDescription },
+  };
+}
 
 export default function RootLayout({
   children,
@@ -32,10 +41,7 @@ export default function RootLayout({
         <PwaRegistration />
 
         <Providers>
-          <div className="grid grid-rows-[auto_1fr] h-svh">
-            <Header />
-            {children}
-          </div>
+          <StorefrontChrome>{children}</StorefrontChrome>
         </Providers>
       </body>
     </html>

@@ -15,7 +15,7 @@
     "db:push": "turbo run db:push -F @basny-web/db --",
     "db:studio": "turbo run db:studio -F @basny-web/db --",
     "db:generate": "turbo run db:generate -F @basny-web/db --",
-    "db:migrate": "turbo run db:migrate -F @basny-web/db --",
+    "db:migrate": "pnpm --filter @basny-web/db db:migrate",
     "env:generate": "varlock codegen --path ./apps/web/ && varlock codegen --path ./apps/server/ && varlock codegen --path ./packages/db/",
     "postinstall": "varlock codegen --path ./apps/web/ && varlock codegen --path ./apps/server/ && varlock codegen --path ./packages/db/",
     "auth:generate": "cd apps/server && pnpm run auth:generate",

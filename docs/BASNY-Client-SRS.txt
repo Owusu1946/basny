@@ -1,0 +1,474 @@
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 1
+BASNY ENTERPRISE
+Full E Commerce Website
+Developer Specification and Acceptance Requirements
+Package Complete E Commerce Website
+Business focus Shoes Heels Bags Fashion Accessories
+Document purpose Build scope Administration Testing Handover
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 2
+Document Overview
+BASNY ENTERPRISE requires a mobile first online store for footwear, bags and related fashion products. Customers must be 
+able to discover products, choose the correct colour and size, add items to a cart, pay securely, receive order updates and submit 
+verified reviews. Administrators must be able to manage the store without routine developer support.
+Core Outcome
+The finished deliverable must be a fully manageable retail platform, not only a product display website. BASNY ENTERPRISE 
+must be able to control products, variants, prices, stock, promotions, customers, orders, payments, delivery, reviews, website 
+content and reports from the administration dashboard.
+Project Inclusions
+Included item Requirement
+Website development Complete customer storefront and administration dashboard
+Domain One domain name registration for the first year
+Business email Two professional email accounts
+Hosting One year of web hosting
+Security SSL certificate and secure deployment
+Payment Integration with one agreed Ghana compatible gateway
+Setup Initial categories, pages, delivery areas, policies and agreed products
+Training Basic administrator training and handover
+Contents
+Part Subject Part Subject
+1 Purpose and system requirements 7 Administration dashboard
+2 Customer storefront 8 Promotions reporting and analytics
+3 Products variants and inventory 9 Content SEO and social integration
+4 Cart checkout and payments 10 Security architecture and quality
+5 Orders delivery returns and notifications 11 Training handover and boundaries
+6 Customers reviews and engagement 12 Acceptance criteria and workflows
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 3
+1 Purpose and System Requirements
+1.1 Business Scope
+The platform will support the sale of women's fashion products, including heels, flat shoes, sandals, slippers, sneakers, handbags, 
+shoulder bags, crossbody bags, tote bags, clutches and other accessories. The design and data model must allow new categories 
+and product types to be introduced later without rebuilding the platform.
+1.2 General Requirements
+ Responsive operation on mobile phones, tablets and desktop computers.
+ Mobile first interface optimized for customers arriving from Instagram, WhatsApp and other social channels.
+ Clean, modern fashion retail presentation with fast product discovery and clear calls to action.
+ Fast page loading, optimized product images and reliable performance on typical mobile data connections.
+ Secure HTTPS deployment, validated input and protected customer and administrator accounts.
+ Simple administration suitable for non technical staff.
+ Search engine friendly page structure and product URLs.
+ Modular architecture that allows future payment, delivery and notification integrations.
+1.3 User Roles
+Role Primary capability
+Guest customer Browse, search, add to cart and complete guest checkout
+Registered customer Manage profile, addresses, wishlist, orders, tracking and reviews
+Super Administrator Full configuration, users, content, commerce and reports
+Sales and Order Administrator Orders, payments, customers, delivery and returns
+Inventory Administrator Products, variants, categories and stock
+Content Administrator Banners, promotions, pages and website content
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 4
+2 Customer Storefront
+2.1 Home Page
+ BASNY ENTERPRISE logo and primary navigation menu.
+ Prominent product search bar.
+ Shopping cart, wishlist and customer account icons.
+ Hero banner and promotional campaign banners.
+ Featured products, new arrivals, best sellers and current promotions.
+ Product category navigation for Shoes, Bags, Accessories and future categories.
+ Optional Instagram content section, subject to Meta integration availability.
+ Newsletter subscription, WhatsApp assistance button and complete footer navigation.
+Administrators must be able to update banners, destination links, display order and selected featured products without changing 
+source code.
+2.2 Catalogue and Categories
+Main category Initial subcategories
+Shoes Heels, Flats, Sandals, Sneakers, Slippers, Wedges, Office Shoes, Casual Shoes
+Bags Handbags, Shoulder Bags, Crossbody Bags, Tote Bags, Clutches, Mini Bags
+Collections New Arrivals, Best Sellers, Sale Items
+Other Accessories and future product categories
+The administration dashboard must support unlimited categories and subcategories, including create, edit, reorder, show, hide, 
+archive and delete actions subject to safe data controls.
+2.3 Product Detail Page
+ Product name, current price, previous price and discount presentation.
+ Main image, multiple additional images, thumbnail gallery and image zoom.
+ Short and full descriptions, material and brand where applicable.
+ Selectable colour and size options with unavailable combinations visibly disabled.
+ Stock availability, quantity selector, Add to Cart and Buy Now actions.
+ Wishlist and product specific WhatsApp enquiry buttons.
+ Delivery and return or exchange information.
+ Average rating, total review count, customer reviews and verified purchase markers.
+ Related products and recently viewed products where practical.
+2.4 Search Filtering and Sorting
+Function Required options
+Search Product name, category, SKU or product code and keywords
+Filter Category, price range, size, colour, availability, new arrivals, best sellers and sale items
+Sort Newest, price low to high, price high to low, most popular and highest rated
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 5
+3 Products Variants and Inventory
+3.1 Product Record
+Data group Required fields
+Identification Product name, SKU or product code, category, subcategory, status
+Description Short description, full description, material and brand where applicable
+Pricing Selling price, original price, promotional price and discount status
+Media Main image, multiple gallery images, image order and optional colour specific images
+Variants Colour, size and any future selectable attribute
+Inventory Quantity by variation, low stock threshold and availability
+Merchandising Featured, new arrival, best seller, sale and visibility status
+3.2 Variation Level Inventory
+Stock must be maintained for each sellable colour and size combination. A single total stock value for a footwear style is not 
+sufficient. Customers must not be allowed to purchase an unavailable combination.
+Product variation Available stock
+Black heel Size 37 3
+Black heel Size 38 5
+Black heel Size 39 0
+Nude heel Size 38 2
+3.3 Size and Colour Management
+ Footwear sizes must be reusable structured options, including sizes 35 to 42 and other sizes added later.
+ Each size may have a separate stock quantity for every colour.
+ Each colour may have its own product image, sizes, SKU and stock quantities.
+ The storefront must update images, availability and price when a variation is selected where applicable.
+3.4 Inventory Controls
+ Add, reduce and correct stock with an adjustment reason.
+ View stock by product, colour and size.
+ Automatically reduce stock after confirmed purchase according to the agreed reservation rule.
+ Restore stock when an order is cancelled or refunded, subject to administrator confirmation.
+ Display low stock and out of stock items and optionally email low stock alerts.
+ Prevent overselling through server side stock validation during checkout and payment confirmation.
+Recommended rule: reserve stock for a limited period when checkout begins and release it automatically if payment is not 
+confirmed. The exact reservation period must be agreed during implementation.
+3.5 Product Image Management
+ Multiple high quality photos per product.
+ Automatic image compression and thumbnail generation.
+ Image reordering and main image selection.
+ Mobile optimized image delivery and lazy loading.
+ File type and size validation; administrators should not need to manually resize every image.
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 6
+4 Cart Checkout and Payments
+4.1 Shopping Cart
+ Add products with the selected size, colour and quantity.
+ View, update and remove cart items.
+ Change a variation, subject to availability.
+ Apply coupon codes and display the resulting discount.
+ Display subtotal, estimated delivery fee, discount and order total.
+ Retain cart contents when the customer leaves temporarily, within the defined retention period.
+4.2 Checkout
+Information group Fields and behaviour
+Customer Full name, phone number and email address
+Delivery Region, city or town, area, address, landmark and delivery instructions
+Order summary Products, images, variants, quantity, subtotal, discount, delivery fee and final total
+Consent Acceptance of applicable terms, delivery and return conditions before order submission
+Guest checkout should be available. A customer who chooses to register should be able to save addresses and review order 
+history.
+4.3 Online Payment
+ Integrate one agreed Ghana compatible gateway such as Paystack or another approved provider.
+ Support Mobile Money, Visa, Mastercard and other methods available through the selected gateway.
+ Create unique transaction references and associate each transaction with one order.
+ Record method, amount, status, date, time and gateway reference.
+ Verify successful payments on the server using the provider's verification mechanism or webhook.
+ Never mark an order paid solely because the customer's browser reached a success page.
+ Do not store raw payment card details within the BASNY ENTERPRISE system.
+Payment status Meaning
+Pending Payment started but not confirmed
+Successful Verified by the gateway
+Failed Payment attempt did not complete
+Refunded Full refund recorded
+Partially Refunded Part of the paid amount returned where supported
+4.4 Manual Payment Options
+The administrator may enable or disable bank transfer, manual Mobile Money transfer or pay on pickup. Orders using a manual 
+method must remain in Awaiting Payment Verification until an authorized administrator approves or rejects the payment. Any 
+uploaded proof must be validated as a secure file upload.
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 7
+5 Orders Delivery Returns and Notifications
+5.1 Order Management
+Each order must receive a unique order number, for example BAS 2026 000124. Administrators must be able to search by order 
+number, customer name, phone number, email or payment reference.
+Order status Purpose
+Pending Order created and awaiting the next action
+Awaiting Payment Payment has not been verified
+Payment Confirmed Payment is verified
+Processing Order is being prepared
+Ready for Dispatch Packed and ready for delivery handoff
+Dispatched Released for delivery
+Ready for Pickup Available for customer collection
+Delivered Delivery confirmed
+Completed Order lifecycle closed
+Cancelled Returned Refunded Exception and reversal states with an audit trail
+5.2 Order Detail for Administrators
+ Items ordered, product images, variants, quantities and prices.
+ Customer details and delivery address.
+ Payment method, reference and verification status.
+ Delivery method and applicable fee.
+ Status timeline showing who made each change and when.
+ Internal notes not visible to the customer.
+ Printable or downloadable order summary where practical.
+5.3 Delivery Configuration
+Example delivery area Illustrative fee
+Tema GHS 30
+Accra GHS 40
+Outside Greater Accra GHS 60 or configured amount
+The sample fees above are illustrative and must remain editable. Administrators must be able to add areas, set fees, activate free 
+delivery campaigns, configure minimum order values for free delivery and offer store pickup.
+5.4 Returns and Exchanges
+Required record Details
+Request Return or exchange, date, reason, product, variation, order and customer
+Decision Under Review, Approved or Rejected with notes
+Resolution Exchanged, Refunded or Completed; refund amount and replacement product where applicable
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 8
+5.5 Customer Notifications
+ Account registration and password reset.
+ Order received and payment confirmed.
+ Order processing, dispatched, ready for pickup and delivered.
+ Cancellation, refund and return updates where applicable.
+Email notifications are part of the core system. The platform should be structured for later SMS or WhatsApp API integration,
+but any paid messaging service requires separate provider setup and charges unless expressly included.
+6 Customers Reviews and Engagement
+6.1 Customer Accounts
+ Register, log in, log out and securely reset a forgotten password.
+ Update personal information and manage saved delivery addresses.
+ View orders, order details, payment status and delivery progress.
+ Maintain a wishlist and move saved products to the cart.
+ Submit reviews for eligible purchased products.
+6.2 Reviews and Ratings
+Customer feature Administration control
+One to five star rating View rating and calculate approved average
+Review title and comment Approve, reject, hide or delete inappropriate content
+Customer display name Protect private account information
+Optional photo Validate, moderate and remove uploaded media
+Verified Purchase badge Display only where the order record confirms purchase
+Published review Allow an authorized business response
+Each product page must display its average rating and number of approved reviews, for example 4.8 stars from 36 reviews. 
+Review moderation must not allow an administrator to alter a customer's wording while presenting it as the original review.
+6.3 Wishlist and Recently Viewed
+ Add and remove products from a wishlist.
+ Move wishlist items into the cart with variation selection.
+ Preserve a registered customer's wishlist across devices.
+ Show recently viewed products where practical and privacy compliant.
+6.4 WhatsApp Assistance
+WhatsApp support must remain available throughout the storefront. From a product page, the prefilled message should include 
+the product name and link, and may include the chosen size or colour. Example: Hello BASNY ENTERPRISE, I would like 
+more information about the Black Heel in Size 39.
+6.5 Abandoned Carts
+Where practical, the system should record carts or checkout sessions that were not completed. The feature must respect 
+applicable privacy requirements and should support later remarketing without automatically enrolling customers in promotional
+messaging.
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 9
+7 Administration Dashboard
+7.1 Dashboard Overview
+Area Required indicators
+Today Revenue, orders and items sold
+This month Revenue, orders and average order value
+Orders Pending, processing, completed, cancelled and recent orders
+Customers Total customers, new customers and repeat customers
+Products In stock, low stock, out of stock and best sellers
+Trends Sales by month, orders by month, revenue trend and category sales
+7.2 Product Administration
+ Create, edit, archive and safely delete products.
+ Upload, reorder and replace product images.
+ Set price, promotional price, categories, sizes, colours and variation stock.
+ Mark products as featured, new arrival, best seller or sale.
+ Show or hide a product without deleting its history.
+ Perform suitable bulk updates or CSV import where agreed and practical.
+7.3 Orders Customers and Reviews
+ Order table showing number, customer, phone, amount, payment, status, delivery method and date.
+ Customer list showing contact information, registration date, order count, total spend and most recent order.
+ Dedicated review queue showing product, customer, rating, comment, date and moderation status.
+ Search, filter and date range controls for high volume administration.
+7.4 Administration Users and Permissions
+The Super Administrator must be able to create, deactivate and assign roles to other administrators. Every protected action must 
+be checked on the server; hiding a menu item is not sufficient access control.
+Role Access
+Super Administrator Complete system, user, commerce, content and configuration access
+Sales and Order Administrator Orders, customers, payments, delivery, returns and reviews as assigned
+Inventory Administrator Products, variants, categories and stock
+Content Administrator Homepage, pages, banners and promotions
+7.5 Administrator Activity Log
+Important activity must record the administrator, action, affected record, date and time. Examples include price changes, stock 
+adjustments, order status changes, refunds, deleted or archived products and administrator account changes. Logs should not be 
+editable by ordinary administrators.
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 10
+8 Promotions Reporting and Analytics
+8.1 Discounts and Coupons
+ Percentage or fixed amount discount.
+ Product, category or store wide promotion.
+ Coupon code, start and expiry date.
+ Minimum purchase and maximum discount.
+ Overall usage limit and per customer usage limit.
+ Activation and deactivation controls.
+Example: BASNY10 provides 10 percent off qualifying orders above GHS 500. The system must validate every coupon on the 
+server and prevent reuse beyond configured limits.
+8.2 Scheduled and Flash Sales
+Administrators must be able to schedule a sale for selected products or categories with start and end dates and times. Promotional 
+pricing must activate and expire automatically. Example: Weekend Sale, 20 percent off selected heels from Friday 6:00 PM to 
+Sunday 11:59 PM.
+8.3 Reports
+Report group Required reporting
+Sales Daily, weekly, monthly, custom date range, revenue and average order value
+Products Best sellers, low performers, no sales, low stock and out of stock
+Orders Completed, cancelled, returned and refunded orders
+Customers New, repeat and highest spending customers
+Payments Successful, failed, pending and refunded transactions
+Reports should be exportable to CSV or Excel. PDF export may be included where practical and agreed during implementation.
+8.4 Analytics
+ Configure Google Analytics or an agreed equivalent.
+ Integrate Meta Pixel where approved for future Facebook and Instagram advertising.
+ Track page views, product views, add to cart, checkout initiation, purchase and conversion.
+ Avoid sending sensitive payment or unnecessary personal information to analytics services.
+9 Content SEO and Social Integration
+9.1 Editable Website Content
+ Homepage banners and campaign links.
+ About Us and Contact Us.
+ Telephone numbers, WhatsApp number and business location.
+ Social media links.
+ Delivery information, Return and Exchange Policy, Privacy Policy, Terms and Conditions and FAQs.
+9.2 Social Media
+ Links to Instagram, Facebook, TikTok and WhatsApp.
+ Product sharing links where supported.
+ Optional Instagram display on the homepage, subject to Meta permissions and technical availability.
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 11
+9.3 Search Engine Optimization
+ Readable product and category URLs.
+ Editable page and product meta titles and descriptions.
+ Product image alternative text.
+ XML sitemap and robots.txt.
+ Logical headings and internal links.
+ Product structured data where practical.
+ Canonical URLs and redirects for renamed or archived products where appropriate.
+Preferred example: basnyenterprise.com/product/black-block-heel rather than a non descriptive query string URL.
+9.4 Required Information Pages
+Page Purpose
+About Us Introduce BASNY ENTERPRISE and the brand
+Contact Us Provide contact channels and location information
+FAQs Answer common ordering, payment and delivery questions
+Delivery Policy Explain methods, fees, timing and responsibility
+Return and Exchange Policy Explain eligibility, process and time limits
+Privacy Policy Explain collection and use of personal data
+Terms and Conditions State the rules governing website purchases
+10 Security Architecture and Quality
+10.1 Minimum Security Controls
+ HTTPS and valid SSL certificate across the entire website.
+ Strong password hashing and secure reset tokens.
+ Protection against SQL injection, cross site scripting and cross site request forgery where applicable.
+ Server side authorization for every administrator action.
+ Login rate limiting and secure session management.
+ Input validation and output encoding.
+ Secure image and proof of payment upload validation.
+ Payment gateway signature or webhook verification.
+ Automated and tested database backups.
+ Secrets stored outside public source code and production logs.
+ Audit logging for sensitive administration actions.
+10.2 Data and Payment Protection
+The platform must collect only information necessary for ordering and support. Raw card numbers, CVV values and full payment 
+credentials must never be stored. Payment processing must remain within the selected gateway's secure environment. Customer 
+exports and reports must be restricted to authorized roles.
+10.3 Performance and Reliability
+ Optimize images and static assets for mobile delivery.
+ Use pagination or efficient loading for long catalogues.
+ Provide clear error states without exposing internal technical information.
+ Use database constraints and transactions to protect order, payment and stock consistency.
+ Maintain backups and document the restoration process.
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 12
+10.4 Compatibility and Testing
+ Current versions of major mobile and desktop browsers.
+ Common Android and iPhone screen sizes.
+ Slow or interrupted network behaviour during checkout and payment attempts.
+11 Training Handover and Scope Boundaries
+11.1 Administrator Training
+ Add products and upload images.
+ Create size and colour variations.
+ Update prices and promotional pricing.
+ Manage stock and low stock thresholds.
+ View, confirm and update orders.
+ Manage customers, reviews, returns and exchanges.
+ Create discounts and edit website content.
+ Run and export standard reports.
+11.2 Handover Items
+ Website administration access.
+ Domain and hosting management access where applicable.
+ Two business email accounts.
+ Payment gateway administration access owned by BASNY ENTERPRISE.
+ Analytics access where configured.
+ Deployment and basic backup or recovery information.
+ Administrator user guide or recorded walkthrough where agreed.
+11.3 Initial Data Setup
+The project includes initial setup of product categories, website pages, payment gateway, delivery areas, basic policies, contact 
+information and social links. An agreed number of products will be uploaded during setup. Large scale product entry, 
+photography, copywriting or data cleaning beyond the agreed quantity requires separate agreement.
+11.4 Commercial and Third Party Boundaries
+Item Boundary
+Domain and hosting Included for the first year; later renewal is charged at prevailing rates
+Business email Two accounts included; extra mailboxes or premium services may cost more
+Payment gateway Technical integration included; provider transaction charges and onboarding requirements remain 
+the client's responsibility
+SMS or WhatsApp API System may be prepared for later integration; provider fees and advanced automation are not 
+included unless agreed
+Delivery providers Location based fees are included; third party courier API integration requires separate confirmation
+Policies and legal text Client must approve business policies and obtain professional advice where required
+Major new features Features outside this specification require change control, revised cost and timeline
+11.5 Items to Confirm Before Development
+1. Final domain name and the two required business email addresses.
+2. Brand assets, colours, logo and approved storefront visual direction.
+3. Selected payment gateway and completed merchant onboarding.
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 13
+4. Delivery areas, exact charges, pickup rules and delivery timing.
+5. Return and exchange rules and applicable time limits.
+6. Number of initial products to be uploaded and who will provide images and descriptions.
+7. Required administrator users and their roles.
+8. Agreed stock reservation period during checkout.
+9. Project milestones, review process and post launch support period.
+12 User Workflows and Acceptance Criteria
+12.1 Customer Purchase Workflow
+10. Customer opens the homepage and browses or searches for a product.
+11. Customer opens the product page and selects an available colour and size.
+12. Customer adds the variation to the cart or uses Buy Now.
+13. Customer reviews the cart, applies any valid coupon and proceeds to checkout.
+14. Customer enters contact and delivery information and chooses delivery or pickup.
+15. Customer selects a payment method and completes payment.
+16. The server verifies payment and creates or updates the order correctly.
+17. Customer receives confirmation and can follow the order status.
+18. BASNY ENTERPRISE processes, dispatches or prepares the order for pickup.
+19. After completion, an eligible customer may submit a product review.
+12.2 Minimum Acceptance Tests
+No Test Pass condition
+1 Admin creates a product with category, price, size and colour. Product appears correctly on the storefront.
+2 Admin enters stock for individual colour and size combinations. Each variation shows the correct availability.
+3 Customer searches, filters and opens a product. Relevant products and details are returned.
+4 Customer selects an available variation and adds it to cart. Cart retains the exact product, colour, size, quantity and 
+price.
+5 Customer attempts an unavailable variation. Purchase is blocked with a clear message.
+6 Customer completes checkout and successful payment. Verified payment produces a paid order with a unique 
+number.
+7 Payment fails or is abandoned. No falsely paid order is created and stock is released 
+according to the agreed rule.
+8 A confirmed order is processed. Stock reduces once and the admin can view full order 
+details.
+9 Admin changes the order status. Customer view and notification reflect the change.
+10 Customer submits a review after purchase. Review enters moderation and can be approved with 
+Verified Purchase status.
+11 Admin creates a coupon and scheduled promotion. Rules, dates and usage limits are enforced correctly.
+12 Admin updates a homepage banner and policy page. Changes publish without developer intervention.
+13 Unauthorized user attempts a protected action. Server denies access and records the event where 
+appropriate.
+14 Website is tested on mobile, tablet and desktop. No clipped content, broken controls or unusable checkout 
+steps.
+15 Order and payment reports are exported. Exported records match filtered dashboard data.
+16 Backup and recovery procedure is demonstrated or documented. Critical store data can be restored through the agreed 
+process.
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 14
+12.3 Completion Standard
+The project will be considered functionally complete when all mandatory requirements in this specification have been 
+implemented, the minimum acceptance tests have passed, agreed content and integrations have been configured, administrator 
+training has been delivered and the required access credentials have been handed over to BASNY ENTERPRISE.
+BASNY ENTERPRISE | FULL E COMMERCE WEBSITE
+Page 15
+Project Sign Off
+This section may be used to record approval of the agreed development scope. Any change after approval should be documented 
+with its effect on cost, delivery date and testing requirements.
+For BASNY ENTERPRISE For the Developer
+Name
+Signature
+Date
+Name
+Signature
+Date

@@ -1,0 +1,1 @@
+ALTER TABLE "customer_order" ADD COLUMN "promotion_discount_ghs" integer DEFAULT 0 NOT NULL;

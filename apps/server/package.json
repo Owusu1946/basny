@@ -9,9 +9,12 @@
     "dev": "tsx watch src/index.ts",
     "start": "node dist/index.mjs",
     "env:generate": "varlock codegen",
-    "auth:generate": "varlock run -- pnpm dlx auth@latest generate --config src/services.ts --output ../../packages/db/src/schema/auth.ts --yes"
+    "auth:generate": "varlock run -- pnpm dlx auth@latest generate --config src/services.ts --output ../../packages/db/src/schema/auth.ts --yes",
+    "auth:bootstrap-admin": "tsx src/bootstrap-admin.ts",
+    "catalogue:seed": "tsx src/seed-catalogue.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1141.0",
     "@basny-web/api": "workspace:*",
     "@basny-web/auth": "workspace:*",
     "@basny-web/db": "workspace:*",
@@ -19,8 +22,11 @@
     "@orpc/openapi": "catalog:",
     "@orpc/server": "catalog:",
     "@orpc/zod": "catalog:",
+    "ably": "^2.29.0",
     "better-auth": "catalog:",
+    "drizzle-orm": "catalog:",
     "hono": "^4.13.7",
+    "sharp": "^0.35.5",
     "varlock": "catalog:",
     "zod": "catalog:"
   },

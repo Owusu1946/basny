@@ -1,0 +1,1 @@
+CREATE INDEX "catalogue_product_pos_page_idx" ON "catalogue_product" ("status","created_at","id");

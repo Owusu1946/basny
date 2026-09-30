@@ -1,5 +1,5 @@
-import { defineRelationsPart } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
+import { defineRelationsPart, sql } from "drizzle-orm";
+import { pgTable, text, timestamp, boolean, index, integer, bigint } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -7,12 +7,13 @@ export const user = pgTable("user", {
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").default(false).notNull(),
   image: text("image"),
+  phone: text("phone"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
-});
+}, (table) => [index("user_email_normalized_idx").on(sql`lower(trim(${table.email}))`)]);
 
 export const session = pgTable(
   "session",
@@ -73,7 +74,15 @@ export const verification = pgTable(
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
-export const authRelations = defineRelationsPart({ user, session, account, verification }, (r) => ({
+/** Shared Better Auth rate-limit counters for multi-instance deployments. */
+export const rateLimit = pgTable("rate_limit", {
+  id: text("id").primaryKey(),
+  key: text("key").notNull().unique(),
+  count: integer("count").notNull(),
+  lastRequest: bigint("last_request", { mode: "number" }).notNull(),
+});
+
+export const authRelations = defineRelationsPart({ user, session, account, verification, rateLimit }, (r) => ({
   user: {
     sessions: r.many.session({
       from: r.user.id,
